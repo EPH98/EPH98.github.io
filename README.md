@@ -1,0 +1,1 @@
+This repo exists to host my personal portfolio on. For now, it contains index.html and nothing more.
