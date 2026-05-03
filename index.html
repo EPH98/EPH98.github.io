@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elliott H — QA Automation Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:      #ffffff;
+      --black:      #0d0d0d;
+      --gray-light: #f4f4f2;
+      --gray-mid:   #d8d8d4;
+      --gray-text:  #767672;
+      --gray-dim:   #b0b0aa;
+      --red:        #c8102e;
+      --rule:       #e2e2de;
+      --font:       'Hanken Grotesk', 'Helvetica Neue', Helvetica, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── UTILITY ── */
+    .label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+      height: 48px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--red);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: stretch;
+      list-style: none;
+      height: 100%;
+    }
+
+    .nav-links li {
+      display: flex;
+      align-items: center;
+      border-left: 1px solid var(--rule);
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      text-decoration: none;
+      padding: 0 1.25rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-links a:hover {
+      color: var(--black);
+      background: var(--gray-light);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      padding-top: 48px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 48px);
+    }
+
+    .hero-left {
+      border-right: 1px solid var(--rule);
+      padding: 5rem 3rem 4rem 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-right {
+      padding: 5rem 0 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    h1 {
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.92;
+      color: var(--black);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--black);
+      margin-bottom: 2rem;
+    }
+
+    .hero-bio {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--gray-text);
+      line-height: 1.75;
+      max-width: 380px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--rule);
+    }
+
+    .hero-stat {
+      padding: 1.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .hero-stat:nth-child(2) { border-right: none; }
+    .hero-stat:nth-child(3),
+    .hero-stat:nth-child(4) { border-top: 1px solid var(--rule); }
+    .hero-stat:nth-child(4) { border-right: none; }
+
+    .stat-val {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-val em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+
+    .hero-link {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      border-right: 1px solid var(--rule);
+      transition: background 0.15s;
+    }
+
+    .hero-link:last-child { border-right: none; }
+    .hero-link:hover { background: var(--black); color: var(--white); }
+
+    .hero-link-arrow {
+      font-size: 14px;
+      transition: transform 0.15s;
+    }
+
+    .hero-link:hover .hero-link-arrow { transform: translate(2px, -2px); }
+
+    /* ── SECTION COMMON ── */
+    .section-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: baseline;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 0;
+    }
+
+    .section-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+    }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+
+    /* ── SKILLS ── */
+    #skills {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .skills-table {
+      width: 100%;
+    }
+
+    .skills-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      align-items: start;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .skills-row:last-child { border-bottom: none; }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .skill-tag {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--black);
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--rule);
+      background: var(--gray-light);
+    }
+
+    .skill-tag.primary {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .job-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .job-row:last-child { border-bottom: none; }
+
+    .job-date-col {
+      padding-top: 3px;
+    }
+
+    .job-year {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-text);
+      white-space: nowrap;
+    }
+
+    .job-content {}
+
+    .job-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .job-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+      letter-spacing: -0.01em;
+    }
+
+    .job-current {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .job-current-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--red);
+    }
+
+    .job-company {
+      font-size: 13px;
+      color: var(--gray-text);
+      font-weight: 400;
+      margin-bottom: 0.85rem;
+    }
+
+    .job-company strong {
+      color: var(--black);
+      font-weight: 500;
+    }
+
+    .job-desc {
+      font-size: 13.5px;
+      color: var(--gray-text);
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 580px;
+      margin-bottom: 0.85rem;
+    }
+
+    .job-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .job-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--gray-text);
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--rule);
+    }
+
+    /* ── PROJECTS ── */
+    #projects {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-left: 1px solid var(--rule);
+    }
+
+    .project-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.15s;
+      position: relative;
+    }
+
+    .project-card:hover { background: var(--gray-light); }
+
+    .project-num {
+      font-size: 48px;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 1.25rem;
+      transition: color 0.15s;
+    }
+
+    .project-card:hover .project-num { color: var(--gray-mid); }
+
+    .project-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--gray-text);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid var(--rule);
+      color: var(--gray-text);
+    }
+
+    .project-link {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .project-card:hover .project-link { color: var(--red); }
+
+    /* ── EDUCATION ── */
+    #education {
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .edu-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+    }
+
+    .edu-degree {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--black);
+      margin-bottom: 0.25rem;
+    }
+
+    .edu-uni {
+      font-size: 13px;
+      color: var(--gray-text);
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .edu-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--black);
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--black);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--gray-text);
+      font-weight: 400;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: stretch;
+      height: 100%;
+      border-left: 1px solid var(--rule);
+    }
+
+    .footer-link {
+      display: flex;
+      align-items: center;
+      padding: 0 1.25rem;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--gray-text);
+      border-right: 1px solid var(--rule);
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .footer-link:hover { color: var(--black); background: var(--gray-light); }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--rule); padding: 3rem 0 2.5rem; }
+      .hero-right { padding: 2.5rem 0 3rem; }
+      h1 { font-size: 4rem; }
+      .section-header,
+      .skills-row,
+      .job-row,
+      .edu-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .section-num { display: none; }
+      .job-date-col { padding-top: 0; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">EH<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div id="hero">
+    <div class="hero-inner">
+
+      <div class="hero-left">
+        <div>
+          <div class="hero-eyebrow">
+            <div class="hero-eyebrow-dot"></div>
+            <span class="label">Portfolio</span>
+          </div>
+          <h1>Elliott<br>H.</h1>
+          <div class="hero-rule"></div>
+          <p class="hero-bio">QA Automation Engineer with 5.5 years in manual testing and 2 years building production automation suites. BSc Technical Game Development, First Class Honours.</p>
+        </div>
+        <div class="hero-links">
+          <a href="https://www.linkedin.com/in/elliotthick/" target="_blank" class="hero-link">
+            LinkedIn <span class="hero-link-arrow">↗</span>
+          </a>
+          <a href="https://github.com/EPH98" target="_blank" class="hero-link">
+            GitHub <span class="hero-link-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-val">5<em>.</em>5</div>
+            <div class="label">Years Manual QA</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-val">2<em>+</em></div>
+            <div class="label">Years Automation</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-val">1<em>st</em></div>
+            <div class="label">Class Honours</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-val">6<em>+</em></div>
+            <div class="label">Employers</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2>Skills</h2>
+      </div>
+      <div class="skills-table">
+        <div class="skills-row reveal">
+          <span class="label">Automation</span>
+          <div class="skills-tags">
+            <span class="skill-tag primary">Playwright</span>
+            <span class="skill-tag primary">Cypress</span>
+            <span class="skill-tag">Selenium</span>
+            <span class="skill-tag">Katalon</span>
+          </div>
+        </div>
+        <div class="skills-row reveal">
+          <span class="label">Languages</span>
+          <div class="skills-tags">
+            <span class="skill-tag primary">TypeScript</span>
+            <span class="skill-tag primary">JavaScript</span>
+            <span class="skill-tag">Java</span>
+          </div>
+        </div>
+        <div class="skills-row reveal">
+          <span class="label">Testing</span>
+          <div class="skills-tags">
+            <span class="skill-tag">Manual QA</span>
+            <span class="skill-tag">API Testing</span>
+            <span class="skill-tag">Mobile Testing</span>
+            <span class="skill-tag">Performance</span>
+            <span class="skill-tag">BDD / Cucumber</span>
+            <span class="skill-tag">Cross-browser</span>
+          </div>
+        </div>
+        <div class="skills-row reveal">
+          <span class="label">Tools</span>
+          <div class="skills-tags">
+            <span class="skill-tag">Azure DevOps</span>
+            <span class="skill-tag">Jira</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Postman</span>
+            <span class="skill-tag">SauceLabs</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2>Experience</h2>
+      </div>
+
+      <div class="job-row reveal">
+        <div class="job-date-col">
+          <div class="job-year">2025</div>
+          <div class="job-year" style="color: var(--gray-dim)">Now</div>
+        </div>
+        <div class="job-content">
+          <div class="job-top">
+            <div class="job-title">QA Automation Engineer</div>
+            <div class="job-current"><div class="job-current-dot"></div>Current</div>
+          </div>
+          <div class="job-company"><strong>Opia</strong> · Gateshead, Hybrid</div>
+          <p class="job-desc">Delivering Playwright-driven test automation ensuring quality across production systems and release pipelines.</p>
+          <div class="job-tags">
+            <span class="job-tag">Playwright</span>
+            <span class="job-tag">TypeScript</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-row reveal">
+        <div class="job-date-col">
+          <div class="job-year">Apr '25</div>
+          <div class="job-year" style="color: var(--gray-dim)">Oct '25</div>
+        </div>
+        <div class="job-content">
+          <div class="job-top">
+            <div class="job-title">QA Lead</div>
+          </div>
+          <div class="job-company"><strong>Indigo Spark</strong> · Stokesley, Remote</div>
+          <p class="job-desc">Led a small in-house QA team while expanding the automation suite. Managed technical and business priorities across stakeholders and clients.</p>
+          <div class="job-tags">
+            <span class="job-tag">Team Leadership</span>
+            <span class="job-tag">JavaScript</span>
+            <span class="job-tag">ClickUp</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-row reveal">
+        <div class="job-date-col">
+          <div class="job-year">Sep '24</div>
+          <div class="job-year" style="color: var(--gray-dim)">Apr '25</div>
+        </div>
+        <div class="job-content">
+          <div class="job-top">
+            <div class="job-title">Senior QA Automation Engineer</div>
+          </div>
+          <div class="job-company"><strong>Indigo Spark</strong> · Remote <span style="color: var(--gray-dim); font-size:11px;">(TUPE from ServAce)</span></div>
+          <p class="job-desc">Continued automation responsibilities following contract transition, embedded within a dedicated software development environment.</p>
+          <div class="job-tags">
+            <span class="job-tag">Test Automation</span>
+            <span class="job-tag">Manual Testing</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-row reveal">
+        <div class="job-date-col">
+          <div class="job-year">Apr '24</div>
+          <div class="job-year" style="color: var(--gray-dim)">Sep '24</div>
+        </div>
+        <div class="job-content">
+          <div class="job-top">
+            <div class="job-title">Senior QA Automation Engineer</div>
+          </div>
+          <div class="job-company"><strong>ServAce</strong> · Wynyard, On-site</div>
+          <p class="job-desc">Embedded QA for a learner management platform. Developed a Cypress automation suite from the ground up. Facilitated cross-team communication between dev, test, and product. API testing via Postman, mobile via SauceLabs.</p>
+          <div class="job-tags">
+            <span class="job-tag">Cypress</span>
+            <span class="job-tag">JavaScript</span>
+            <span class="job-tag">Postman</span>
+            <span class="job-tag">SauceLabs</span>
+            <span class="job-tag">Jira</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-row reveal">
+        <div class="job-date-col">
+          <div class="job-year">Apr '22</div>
+          <div class="job-year" style="color: var(--gray-dim)">Apr '24</div>
+        </div>
+        <div class="job-content">
+          <div class="job-top">
+            <div class="job-title">Quality Engineer</div>
+          </div>
+          <div class="job-company"><strong>TUI</strong> · Stockton-on-Tees</div>
+          <p class="job-desc">Created test plans and scripts against project and business requirements. Manual functional, cross-browser, and device testing alongside automated test development in Java/Selenium. JMeter load and performance testing.</p>
+          <div class="job-tags">
+            <span class="job-tag">Java</span>
+            <span class="job-tag">Selenium</span>
+            <span class="job-tag">Cucumber BDD</span>
+            <span class="job-tag">Katalon</span>
+            <span class="job-tag">JMeter</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="job-row reveal">
+        <div class="job-date-col">
+          <div class="job-year">Mar '20</div>
+          <div class="job-year" style="color: var(--gray-dim)">Apr '22</div>
+        </div>
+        <div class="job-content">
+          <div class="job-top">
+            <div class="job-title">Online Services QA</div>
+          </div>
+          <div class="job-company"><strong>Rockstar Games</strong> · Lincolnshire</div>
+          <p class="job-desc">Manual QA across online services for one of the world's highest-profile live game platforms.</p>
+          <div class="job-tags">
+            <span class="job-tag">Manual QA</span>
+            <span class="job-tag">Games Industry</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2>Projects</h2>
+      </div>
+    </div>
+    <div class="section-wrap" style="padding-left: calc(2rem); padding-right: calc(2rem);">
+      <div class="projects-grid reveal">
+
+        <a href="https://github.com/EPH98/playwright-shop" target="_blank" class="project-card">
+          <div class="project-num">01</div>
+          <div class="project-title">The Workspace — Playwright Shop</div>
+          <p class="project-desc">A purpose-built dummy e-commerce frontend paired with a production-grade Playwright test suite. Covers fixtures, Page Object Models, CI/CD via GitHub Actions, and Dockerised environments.</p>
+          <div class="project-stack">
+            <span class="project-tag">Playwright</span>
+            <span class="project-tag">TypeScript</span>
+            <span class="project-tag">Next.js 14</span>
+            <span class="project-tag">Docker</span>
+            <span class="project-tag">GitHub Actions</span>
+            <span class="project-tag">POM</span>
+          </div>
+          <div class="project-link">View on GitHub ↗</div>
+        </a>
+
+        <a href="https://github.com/EPH98/PoE2-RD-bot" target="_blank" class="project-card">
+          <div class="project-num">02</div>
+          <div class="project-title">PoE2 RD Bot</div>
+          <p class="project-desc">A personal automation bot for Path of Exile 2. Applying scripting and automation skills beyond the professional context — because engineering instincts don't switch off at 5pm.</p>
+          <div class="project-stack">
+            <span class="project-tag">Automation</span>
+            <span class="project-tag">Scripting</span>
+            <span class="project-tag">Gaming</span>
+          </div>
+          <div class="project-link">View on GitHub ↗</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-wrap">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2>Education</h2>
+      </div>
+      <div class="edu-row reveal">
+        <div class="job-date-col">
+          <div class="job-year" style="color: var(--gray-dim)">BSc</div>
+        </div>
+        <div>
+          <div class="edu-degree">Technical Game Development</div>
+          <div class="edu-uni">Teesside University</div>
+          <span class="edu-badge">First Class Honours</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy">Elliott H.</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/elliotthick/" target="_blank" class="footer-link">LinkedIn ↗</a>
+      <a href="https://github.com/EPH98" target="_blank" class="footer-link">GitHub ↗</a>
+    </div>
+  </footer>
+
+  <script>
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), 60);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>
